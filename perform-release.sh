@@ -98,26 +98,26 @@ if [[ "${SKIP_BUILD}" == "0" ]]; then
     cd ..
 fi
 git commit -s -a -m "Update to version $RELEASE_VERSION"
-git tag -s -a -m "deeplearning4j-$RELEASE_VERSION" "deeplearning4j-$RELEASE_VERSION"
-git tag -s -a -f -m "deeplearning4j-$RELEASE_VERSION" "latest_release"
+#git tag -s -a -m "deeplearning4j-$RELEASE_VERSION" "deeplearning4j-$RELEASE_VERSION"
+#git tag -s -a -f -m "deeplearning4j-$RELEASE_VERSION" "latest_release"
 
-sed -i "s/<nd4j.version>.*<\/nd4j.version>/<nd4j.version>$SNAPSHOT_VERSION<\/nd4j.version>/" pom.xml
-sed -i "s/<datavec.version>.*<\/datavec.version>/<datavec.version>$SNAPSHOT_VERSION<\/datavec.version>/" pom.xml
-sed -i "s/<dl4j.version>.*<\/dl4j.version>/<dl4j.version>$SNAPSHOT_VERSION<\/dl4j.version>/" pom.xml
-sed -i "s/<deeplearning4j.version>.*<\/deeplearning4j.version>/<deeplearning4j.version>$SNAPSHOT_VERSION<\/deeplearning4j.version>/" pom.xml
-sed -i "s/<dl4j-test-resources.version>.*<\/dl4j-test-resources.version>/<dl4j-test-resources.version>$SNAPSHOT_VERSION<\/dl4j-test-resources.version>/" pom.xml
-#Spark versions, like <version>xxx_spark_2-SNAPSHOT</version>
-SPLIT_VERSION=(${SNAPSHOT_VERSION//-/ })
-for f in $(find . -name 'pom.xml' -not -path '*target*'); do
-    sed -i "s/version>.*_spark_.*</version>${SPLIT_VERSION[0]}_spark_2-${SPLIT_VERSION[1]}</g" $f
-done
-mvn versions:set -DallowSnapshots=true -DgenerateBackupPoms=false -DnewVersion=$SNAPSHOT_VERSION
-
-# back to a version stanza
-sed -i "s/<version>$RELEASE_VERSION<\/version>/<version>$SNAPSHOT_VERSION<\/version>/" pom.xml
-
-sed -i "s/\"currentVersion\", default = \".*\"/\"currentVersion\", default = \"$SNAPSHOT_VERSION\"/" nd4s/build.sbt
-sed -i "s/\"nd4jVersion\", default = \".*\"/\"nd4jVersion\", default = \"$SNAPSHOT_VERSION\"/" nd4s/build.sbt
-git commit -s -a -m "Update to version $SNAPSHOT_VERSION"
-
-echo "Successfully performed release of version $RELEASE_VERSION ($SNAPSHOT_VERSION) to repository $RELEASE_PROFILE $STAGING_REPOSITORY"
+#sed -i "s/<nd4j.version>.*<\/nd4j.version>/<nd4j.version>$SNAPSHOT_VERSION<\/nd4j.version>/" pom.xml
+#sed -i "s/<datavec.version>.*<\/datavec.version>/<datavec.version>$SNAPSHOT_VERSION<\/datavec.version>/" pom.xml
+#sed -i "s/<dl4j.version>.*<\/dl4j.version>/<dl4j.version>$SNAPSHOT_VERSION<\/dl4j.version>/" pom.xml
+#sed -i "s/<deeplearning4j.version>.*<\/deeplearning4j.version>/<deeplearning4j.version>$SNAPSHOT_VERSION<\/deeplearning4j.version>/" pom.xml
+#sed -i "s/<dl4j-test-resources.version>.*<\/dl4j-test-resources.version>/<dl4j-test-resources.version>$SNAPSHOT_VERSION<\/dl4j-test-resources.version>/" pom.xml
+##Spark versions, like <version>xxx_spark_2-SNAPSHOT</version>
+#SPLIT_VERSION=(${SNAPSHOT_VERSION//-/ })
+#for f in $(find . -name 'pom.xml' -not -path '*target*'); do
+#    sed -i "s/version>.*_spark_.*</version>${SPLIT_VERSION[0]}_spark_2-${SPLIT_VERSION[1]}</g" $f
+#done
+#mvn versions:set -DallowSnapshots=true -DgenerateBackupPoms=false -DnewVersion=$SNAPSHOT_VERSION
+#
+## back to a version stanza
+#sed -i "s/<version>$RELEASE_VERSION<\/version>/<version>$SNAPSHOT_VERSION<\/version>/" pom.xml
+#
+#sed -i "s/\"currentVersion\", default = \".*\"/\"currentVersion\", default = \"$SNAPSHOT_VERSION\"/" nd4s/build.sbt
+#sed -i "s/\"nd4jVersion\", default = \".*\"/\"nd4jVersion\", default = \"$SNAPSHOT_VERSION\"/" nd4s/build.sbt
+#git commit -s -a -m "Update to version $SNAPSHOT_VERSION"
+#
+#echo "Successfully performed release of version $RELEASE_VERSION ($SNAPSHOT_VERSION) to repository $RELEASE_PROFILE $STAGING_REPOSITORY"
